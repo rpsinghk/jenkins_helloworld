@@ -5,7 +5,7 @@ RUN pwd
 RUN find  . | grep hello
 
 # copy application JAR (with libraries inside)
-COPY /build/libs/jenkins_helloworld1-1.0.0.jar.jar /jenkins_helloworld.jar
+COPY build/libs/jenkins_helloworld1-1.0.0.jar.jar /jenkins_helloworld.jar
 
 # Copy image specific configs and scripts
 COPY test/init.sh /usr/bin/init.sh
