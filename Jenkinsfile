@@ -49,7 +49,7 @@ pipeline {
 				   // def PWD = pwd();
 				    
 
-      				sh 'docker build -t --progress=plain  --no-cache rpsinghk/jenkins_helloworld .'
+      				sh 'docker build  --no-cache -t rpsinghk/jenkins_helloworld .'
 
                 	
                     //sh 'docker push rpsinghk/jenkins_helloworld'
