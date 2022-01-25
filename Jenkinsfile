@@ -29,7 +29,7 @@ pipeline {
 	post {
 		changed {
 			script {
-				echo("in post script"
+				echo("in post script")
 			}
 		}
 	}
