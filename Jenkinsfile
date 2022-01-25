@@ -16,6 +16,7 @@ pipeline {
 				docker {
 					image 'adoptopenjdk/openjdk8:latest'
 					args '-v $HOME/.m2:/tmp/jenkins-home/.m2'
+					reuseNode true
 				}
 			}
 			options { timeout(time: 30, unit: 'MINUTES') }
@@ -25,6 +26,14 @@ pipeline {
 			}
 		}
 
+		stage("test: baseline (publish)") {
+			agent {
+				docker {
+					    def customImage = docker.build("my-image:${env.BUILD_ID}")
+    					customImage.push()
+				}
+			}
+		}
 	}
 
 	post {
