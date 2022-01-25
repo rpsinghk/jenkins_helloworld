@@ -48,11 +48,9 @@ pipeline {
 				    
 				   // def PWD = pwd();
 				    
-				    dir('jenkins_helloworld') {
-				    	//echo "PWD :  $PWD"
-      					sh 'docker build -t rpsinghk/jenkins_helloworld .'
-   					}
-				    
+
+      				sh 'docker build -t rpsinghk/jenkins_helloworld .'
+
                 	
                     //sh 'docker push rpsinghk/jenkins_helloworld'
                 }
