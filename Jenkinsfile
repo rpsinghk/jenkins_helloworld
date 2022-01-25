@@ -23,19 +23,11 @@ pipeline {
 			steps {
 			    sh "chmod +x -R ${env.WORKSPACE}"
 				sh 'test/run.sh'
+				def customImage = docker.build("my-image:${env.BUILD_ID}")
+				customImage.push("latest")
 			}
 		}
 
-		stage("test: baseline (publish)") {
-			steps{
-				docker {
-					    def customImage = docker.build("my-image:${env.BUILD_ID}")
-    					customImage.push("latest")
-				}
-				
-				}
-			
-		}
 	}
 
 	post {
