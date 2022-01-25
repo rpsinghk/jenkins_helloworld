@@ -15,7 +15,7 @@ pipeline {
 	}
 
 	stages {
-		stage("test: baseline (jdk8)") {
+		stage("Build") {
 			agent {
 				docker {
 					image 'adoptopenjdk/openjdk8:latest'
@@ -34,6 +34,7 @@ pipeline {
         stage ('Build & Push docker image') {
             steps {
                 withDockerRegistry(credentialsId:"",url: 'tcp://192.168.0.106:2375') {
+                	sh 'docker build -t rpsinghk/jenkins_helloworld .'
                     sh 'docker push rpsinghk/jenkins_helloworld'
                 }
             }
