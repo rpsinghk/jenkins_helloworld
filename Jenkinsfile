@@ -46,10 +46,10 @@ pipeline {
 				    // the current Jenkins instances will support the short syntax, too:
 				    echo "Current workspace is $WORKSPACE"
 				    
-				    def PWD = pwd();
+				   // def PWD = pwd();
 				    
 				    dir('jenkins_helloworld') {
-				    	echo "PWD :  $PWD"
+				    	//echo "PWD :  $PWD"
       					sh 'docker build -t rpsinghk/jenkins_helloworld .'
    					}
 				    
