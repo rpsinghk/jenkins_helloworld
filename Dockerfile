@@ -1,7 +1,8 @@
 # Base Alpine Linux based image with OpenJDK JRE only
 FROM adoptopenjdk/openjdk8:latest
 
-RUN echo "$PWD"
+RUN echo $PWD
+RUN echo PWD
 
 # copy application JAR (with libraries inside)
 COPY /var/jenkins_home/workspace/jenkins_helloworld/build/libs/jenkins_helloworld1-1.0.0.jar.jar /jenkins_helloworld.jar
