@@ -34,10 +34,10 @@ pipeline {
         stage ('Build & Push docker image') {
             steps {
                 withDockerRegistry(credentialsId:"",url: 'tcp://192.168.0.106:2375') {
-				    def workspace = WORKSPACE
+				    //def workspace = WORKSPACE
 				    // ${workspace} will now contain an absolute path to job workspace on slave
 				
-				    workspace = env.WORKSPACE
+				   // workspace = env.WORKSPACE
 				    // ${workspace} will still contain an absolute path to job workspace on slave
 				
 				    // When using a GString at least later Jenkins versions could only handle the env.WORKSPACE variant:
