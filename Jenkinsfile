@@ -26,7 +26,7 @@ pipeline {
 			options { timeout(time: 30, unit: 'MINUTES') }
 			steps {
 			    sh "chmod +x -R ${env.WORKSPACE}"
-				sh './gradlew clean build -x test'
+				sh './gradlew build -x test'
 			}
 		}
 		
