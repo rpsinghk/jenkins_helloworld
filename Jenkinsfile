@@ -20,6 +20,7 @@ pipeline {
 			}
 			options { timeout(time: 30, unit: 'MINUTES') }
 			steps {
+			    sh "chmod +x -R ${env.WORKSPACE}"
 				sh 'test/run.sh'
 			}
 		}
