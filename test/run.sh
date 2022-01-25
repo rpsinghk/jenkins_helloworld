@@ -2,7 +2,11 @@
 cd $(dirname $0)
 
 cd ../
-echo $pwd
 
+./gradlew build
+ret=$?
+if [ $ret -ne 0 ]; then
+exit $ret
+fi
 
 exit
