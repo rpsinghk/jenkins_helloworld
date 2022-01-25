@@ -2,7 +2,7 @@
 FROM adoptopenjdk/openjdk8:latest
 
 RUN pwd
-RUN dir
+RUN find  . | grep hello
 
 # copy application JAR (with libraries inside)
 COPY /build/libs/jenkins_helloworld1-1.0.0.jar.jar /jenkins_helloworld.jar
