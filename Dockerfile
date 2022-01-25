@@ -5,7 +5,7 @@ RUN echo $PWD
 RUN echo PWD
 
 # copy application JAR (with libraries inside)
-COPY /var/jenkins_home/workspace/jenkins_helloworld/build/libs/jenkins_helloworld1-1.0.0.jar.jar /jenkins_helloworld.jar
+COPY /build/libs/jenkins_helloworld1-1.0.0.jar.jar /jenkins_helloworld.jar
 
 # Copy image specific configs and scripts
 COPY test/init.sh /usr/bin/init.sh
