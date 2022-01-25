@@ -33,7 +33,7 @@ pipeline {
 
         stage ('Build & Push docker image') {
             steps {
-                withDockerRegistry(url: 'tcp://192.168.0.106:2375') {
+                withDockerRegistry(credentialsId:"",url: 'tcp://192.168.0.106:2375') {
                     sh 'docker push rpsinghk/jenkins_helloworld'
                 }
             }
