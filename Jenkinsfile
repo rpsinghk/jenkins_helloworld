@@ -4,6 +4,10 @@ pipeline {
 	triggers {
 		pollSCM 'H/10 * * * *'
 	}
+	
+	environment {
+        MESG = "REPLACE_WITH_REMOTE_ADDRESS"
+    }
 
 	options {
 		disableConcurrentBuilds()
@@ -22,12 +26,24 @@ pipeline {
 			options { timeout(time: 30, unit: 'MINUTES') }
 			steps {
 			    sh "chmod +x -R ${env.WORKSPACE}"
-				sh 'test/run.sh'
-				def customImage = docker.build("my-image:${env.BUILD_ID}")
-				customImage.push("latest")
+				sh './gradlew clean build'
 			}
 		}
+		
 
+        stage ('Build & Push docker image') {
+            steps {
+                withDockerRegistry(url: 'tcp://192.168.0.106:2375') {
+                    sh 'docker push rpsinghk/jenkins_helloworld'
+                }
+            }
+        }
+		
+		stage ('Deploy') {
+    		steps {
+        		echo("deploy")
+    		}
+		}
 	}
 
 	post {
