@@ -15,6 +15,22 @@ pipeline {
 	}
 
 	stages {
+        stage('Environment Preparation') {
+            steps {
+                echo 'Preparing environment for app and docker build'
+                script {
+                    //env.SERVICE = "${params.ecs_service}"
+                    env.COMPONENT = "gps"
+                    //env.ECR_TAG = "${params.ecr_tag}"
+                    //env.ENVIRONMENT = "${params.environment}"
+                    env.IMAGE = "${env.COMPONENT}/${env.SERVICE}"
+                    //env.ECS_SERVICE_NAME = "${params.ecs_service}"
+                    //env.ECS_TASK_DEFINITION_NAME = "${params.ecs_service}"
+                    //env.NETWORK_MODE = "awsvpc"
+                    //env.TASK_ROLE = "gsam-container-role"
+                }
+            }
+        }
 		stage("Build") {
 			agent {
 				docker {
