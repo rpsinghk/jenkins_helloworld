@@ -50,7 +50,9 @@ pipeline {
 		
 		stage("Scan gitleaks") {
 			steps {
-				buildAndRegisterDockerImage()
+				sh "scan gitleaks"
+				/*
+					buildAndRegisterDockerImage()
 					withDockerRegistry(credentialsId:"",url: "${env.REGISTRY_URL}") {
 						script{
 							sh "echo $docker"
@@ -59,6 +61,7 @@ pipeline {
 							sh "gitleaks  --repo-url=${env.CURRENT_SCM} --verbose --report=analytics-${env.JOB_NAME}-repo.json"
 						}
 	      			}
+	      		*/
       		}
 		}
 		
@@ -95,12 +98,5 @@ def buildAndRegisterDockerImage() {
     def buildResult
     docker.withRegistry(env.REGISTRY_URL) {
         echo "Connect to registry at ${env.REGISTRY_URL}"
-        dockerRegistryLogin()
-        echo "Build ${env.IMAGE_NAME}"
-        buildResult = docker.build(env.IMAGE_NAME)
-        echo "Register ${env.IMAGE_NAME} at ${env.REGISTRY_URL}"
-        buildResult.push()
-        echo "Disconnect from registry at ${env.REGISTRY_URL}"
-        sh "docker logout ${env.REGISTRY_URL}"
     }
 }
