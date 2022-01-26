@@ -50,11 +50,9 @@ pipeline {
 		stage("Scan gitleaks") {
 			steps {
 					withDockerRegistry(credentialsId:"",url: 'tcp://192.168.0.106:2375') {
-						docker.image('zricethezav/gitleaks').withRun('-d=true -p 8888:8080 ') {c ->
-				            docker.image('zricethezav/gitleaks').inside{
-								sh "gitleaks  --repo-url=${env.CURRENT_SCM} --verbose --report=analytics-${env.JOB_NAME}-repo.json"
-				            }
-				        }
+						withDockerRegistry(image:'zricethezav/gitleaks',args:'-d=true -p 8888:8080 '){
+							sh "gitleaks  --repo-url=${env.CURRENT_SCM} --verbose --report=analytics-${env.JOB_NAME}-repo.json"
+						}
 	      			}
       		}
 		}
