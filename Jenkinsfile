@@ -37,7 +37,7 @@ pipeline {
 			agent {
 				docker {
 					image 'adoptopenjdk/openjdk8:latest'
-					args '-v ${env.WORKSPACE}/.m2:/tmp/jenkins-home/.m2'
+					args '-v ${WORKSPACE}/.m2:/tmp/jenkins-home/.m2'
 					reuseNode true
 				}
 			}
