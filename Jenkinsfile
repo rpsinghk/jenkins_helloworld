@@ -29,6 +29,7 @@ pipeline {
                     //env.NETWORK_MODE = "awsvpc"
                     //env.TASK_ROLE = "gsam-container-role"
                    	 env.CURRENT_SCM= scm.getUserRemoteConfigs()[0].getUrl()
+                   	 env.REGISTRY_URL="tcp://192.168.0.106:2375"
                 }
             }
         }
@@ -49,9 +50,10 @@ pipeline {
 		
 		stage("Scan gitleaks") {
 			steps {
-					withDockerRegistry(credentialsId:"",url: 'tcp://192.168.0.106:2375') {
+				buildAndRegisterDockerImage()
+					withDockerRegistry(credentialsId:"",url: "${env.REGISTRY_URL}") {
 						script{
-							sh "echo docker"
+							sh "echo $docker"
 						}
 						withDockerContainer(image:"zricethezav/gitleaks",args:"-d=true -p 8888:8080"){
 							sh "gitleaks  --repo-url=${env.CURRENT_SCM} --verbose --report=analytics-${env.JOB_NAME}-repo.json"
@@ -63,7 +65,7 @@ pipeline {
 
         stage ('Build & Push docker image') {
             steps {
-                withDockerRegistry(credentialsId:"",url: 'tcp://192.168.0.106:2375') {
+                withDockerRegistry(credentialsId:"",url: "${env.REGISTRY_URL}") {
 				    echo "Current workspace is ${env.WORKSPACE}"
 				    echo "Current workspace is $WORKSPACE"
       				sh 'docker build --rm --progress plain --no-cache -t rpsinghk/jenkins_helloworld .'
@@ -86,4 +88,19 @@ pipeline {
 			}
 		}
 	}
+}
+
+
+def buildAndRegisterDockerImage() {
+    def buildResult
+    docker.withRegistry(env.REGISTRY_URL) {
+        echo "Connect to registry at ${env.REGISTRY_URL}"
+        dockerRegistryLogin()
+        echo "Build ${env.IMAGE_NAME}"
+        buildResult = docker.build(env.IMAGE_NAME)
+        echo "Register ${env.IMAGE_NAME} at ${env.REGISTRY_URL}"
+        buildResult.push()
+        echo "Disconnect from registry at ${env.REGISTRY_URL}"
+        sh "docker logout ${env.REGISTRY_URL}"
+    }
 }
