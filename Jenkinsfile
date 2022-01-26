@@ -51,7 +51,8 @@ pipeline {
 			steps {
 				docker.withRegistry(credentialsId:"",url: 'tcp://192.168.0.106:2375') {
   					docker.image('zricethezav/gitleaks').inside('--entrypoint=""') { 
-        			sh "gitleaks  --repo-url=${env.CURRENT_SCM} --verbose --report=analytics-${env.JOB_NAME}-repo.json"
+        				sh "gitleaks  --repo-url=${env.CURRENT_SCM} --verbose --report=analytics-${env.JOB_NAME}-repo.json"
+        			}
       			}
       		}
 		}
