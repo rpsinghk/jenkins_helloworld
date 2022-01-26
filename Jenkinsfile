@@ -49,7 +49,6 @@ pipeline {
 		
 		stage("Scan gitleaks") {
 			steps {
-			    script{
 					docker.withRegistry(credentialsId:"",url: 'tcp://192.168.0.106:2375') {
 						docker.image('zricethezav/gitleaks').withRun('-d=true -p 8888:8080 ') {c ->
 				            docker.image('zricethezav/gitleaks').inside{
@@ -57,7 +56,6 @@ pipeline {
 				            }
 				        }
 	      			}
-      			}
       		}
 		}
 		
