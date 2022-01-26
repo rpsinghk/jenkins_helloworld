@@ -28,6 +28,7 @@ pipeline {
                     //env.ECS_TASK_DEFINITION_NAME = "${params.ecs_service}"
                     //env.NETWORK_MODE = "awsvpc"
                     //env.TASK_ROLE = "gsam-container-role"
+                   	 env.CURRENT_SCM= scm.getUserRemoteConfigs()[0].getUrl()
                 }
             }
         }
@@ -44,6 +45,12 @@ pipeline {
 			    sh "chmod +x -R ${env.WORKSPACE}"
 				sh './gradlew build -x test'
 			}
+		}
+		
+		stage("Scan gitleaks") {
+				docker.image('zricethezav/gitleaks').inside('--entrypoint=""') {
+        			sh "gitleaks  --repo-url=${env.CURRENT_SCM} --verbose --report=analytics-${env.JOB_NAME}-repo.json"
+      			}
 		}
 		
 
