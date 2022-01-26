@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.rpsinghk.jenkins.hello'
-version = '1.0.0'
+version = 'final'
 sourceCompatibility = '8'
 
 configurations {
