@@ -48,9 +48,11 @@ pipeline {
 		}
 		
 		stage("Scan gitleaks") {
+			steps {
 				docker.image('zricethezav/gitleaks').inside('--entrypoint=""') {
         			sh "gitleaks  --repo-url=${env.CURRENT_SCM} --verbose --report=analytics-${env.JOB_NAME}-repo.json"
       			}
+      		}
 		}
 		
 
