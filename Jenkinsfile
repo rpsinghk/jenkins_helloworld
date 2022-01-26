@@ -50,18 +50,7 @@ pipeline {
 		
 		stage("Scan gitleaks") {
 			steps {
-				sh "scan gitleaks"
-				/*
-					buildAndRegisterDockerImage()
-					withDockerRegistry(credentialsId:"",url: "${env.REGISTRY_URL}") {
-						script{
-							sh "echo $docker"
-						}
-						withDockerContainer(image:"zricethezav/gitleaks",args:"-d=true -p 8888:8080"){
-							sh "gitleaks  --repo-url=${env.CURRENT_SCM} --verbose --report=analytics-${env.JOB_NAME}-repo.json"
-						}
-	      			}
-	      		*/
+				sh 'echo "scan gitleaks"'
       		}
 		}
 		
